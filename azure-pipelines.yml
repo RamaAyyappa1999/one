@@ -5,8 +5,10 @@ pool:
   name: flm-pool
 
 steps:
+  - 
 - task: Maven@4
   inputs:
+    azureSubscription: 'Azure subscription 1(f7d47e13-f6e1-4980-a7f2-985e6305564f)'
     mavenPomFile: 'pom.xml'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
@@ -15,12 +17,3 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
-
-- task: TomcatDeployment@1
-  inputs:
-    TomcatUrl: 'http://48.217.68.254:8080/'
-    Username: 'tomcat'
-    Password: 'admin@123'
-    Warfile: 'target/myweb-8.7.3.war'
-    Context: '/our-app'
-    ServerVersion: '7OrAbove'
