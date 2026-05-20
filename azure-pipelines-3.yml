@@ -1,0 +1,31 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  name: flm-pool
+
+steps:
+- task: Maven@4
+  inputs:
+    azureSubscription: 'Azure subscription 1(f7d47e13-f6e1-4980-a7f2-985e6305564f)'
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+- task: TomcatDeployment@1
+  inputs:
+    TomcatUrl: 'http://4.154.78.71:8080/'
+    Username: 'tomcat'
+    Password: 'admin@123'
+    Warfile: 'target/myweb-8.7.3.war'
+    Context: '/vasuExpressAppDeployment'
+    ServerVersion: '7OrAbove'
