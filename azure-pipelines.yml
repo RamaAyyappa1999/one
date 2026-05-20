@@ -1,0 +1,18 @@
+trigger:
+- master
+
+pool:
+  name: flm-pool
+
+steps:
+- task: Maven@4
+  inputs:
+    azureSubscription: 'Azure subscription 1(f7d47e13-f6e1-4980-a7f2-985e6305564f)'
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
