@@ -19,9 +19,9 @@ steps:
 
 - task: TomcatDeployment@1
   inputs:
-      TomcatUrl: 'http://4.154.78.71:8080/'
-      Username: 'tomcat'
-      Password: 'admin@123'
-      Warfile: 'myweb-8.7.3.war'
-      Context: '/my-ecom'
-      ServerVersion: '7OrAbove'
+    TomcatUrl: 'http://4.154.78.71:8080/'
+    Username: 'tomcat'
+    Password: 'admin@123'
+    Warfile: 'target/myweb-8.7.3.war'
+    Context: '/my-ecom'
+    ServerVersion: '7OrAbove'
