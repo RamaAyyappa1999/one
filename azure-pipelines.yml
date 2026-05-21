@@ -5,23 +5,36 @@ pool:
   name: flm-pool
 
 steps:
+- task: SonarQubePrepare@8
+  inputs:
+    SonarQube: 'sonar-connection'
+    scannerMode: 'other'
+    extraProperties: 'sonar.projectKey=ecom'
+- task: JavaToolInstaller@1
+  inputs:
+    versionSpec: '11'
+    jdkArchitectureOption: 'x64'
+    jdkSourceOption: 'PreInstalled'
 - task: Maven@4
   inputs:
-    azureSubscription: 'Azure subscription 1(f7d47e13-f6e1-4980-a7f2-985e6305564f)'
     mavenPomFile: 'pom.xml'
+    goals: 'clean package'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
     effectivePomSkip: false
-    sonarQubeRunAnalysis: false
-
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'pom'
+- task: SonarQubePublish@8
+  inputs:
+    pollingTimeoutSec: '300'
 - task: TomcatDeployment@1
   inputs:
     TomcatUrl: 'http://4.154.78.71:8080/'
     Username: 'tomcat'
     Password: 'admin@123'
     Warfile: 'target/myweb-8.7.3.war'
-    Context: '/my-ecom'
+    Context: '/ecom-app-vasu'
     ServerVersion: '7OrAbove'
