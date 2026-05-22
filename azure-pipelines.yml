@@ -7,21 +7,16 @@ pool:
 steps:
 - task: SonarQubePrepare@8
   inputs:
-    SonarQube: 'sonar-connection'
+    SonarQube: 'sonar-server'
     scannerMode: 'other'
-    extraProperties: |
-      # Additional properties that will be passed to the scanner,
-      # Put one key=value per line, example:
-      # sonar.exclusions=**/*.bin
-      sonar.projectKey=ecom
+    extraProperties: 'sonar.projectKey=vasu-sonar'
 - task: JavaToolInstaller@1
   inputs:
-    versionSpec: '11'
-    jdkArchitectureOption: 'x64'
+    versionSpec: '21'
+    jdkArchitectureOption: 'arm64'
     jdkSourceOption: 'PreInstalled'
 - task: Maven@4
   inputs:
-    azureSubscription: 'Azure subscription 1(f7d47e13-f6e1-4980-a7f2-985e6305564f)'
     mavenPomFile: 'pom.xml'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
@@ -30,15 +25,7 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
-    sqMavenPluginVersionChoice: 'pom'
+    sqMavenPluginVersionChoice: 'latest'
 - task: SonarQubePublish@8
   inputs:
     pollingTimeoutSec: '300'
-- task: TomcatDeployment@1
-  inputs:
-    TomcatUrl: 'http://4.154.78.71:8080/'
-    Username: 'tomcat'
-    Password: 'admin@123'
-    Warfile: 'target/myweb-8.7.3.war'
-    Context: '/ecom-app-vasu'
-    ServerVersion: '7OrAbove'
