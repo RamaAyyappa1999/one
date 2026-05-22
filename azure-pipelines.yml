@@ -7,7 +7,7 @@ pool:
 steps:
 - task: SonarQubePrepare@8
   inputs:
-    SonarQube: 'sonar-connection'
+    SonarQube: 'sonar-server'
     scannerMode: 'other'
     extraProperties: 'sonar.projectKey=ecom'
 
