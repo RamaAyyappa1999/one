@@ -9,12 +9,10 @@ steps:
   inputs:
     SonarQube: 'sonar-server'
     scannerMode: 'other'
-    extraProperties: 'sonar.projectKey=ecom'
 
 - task: Maven@4
   inputs:
     mavenPomFile: 'pom.xml'
-    goals: 'clean package'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     javaHomeOption: 'JDKVersion'
@@ -23,14 +21,7 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: true
     sqMavenPluginVersionChoice: 'latest'
+    
 - task: SonarQubePublish@8
   inputs:
     pollingTimeoutSec: '300'
-- task: TomcatDeployment@1
-  inputs:
-    TomcatUrl: 'http://4.154.78.71:8080/'
-    Username: 'tomcat'
-    Password: 'admin@123'
-    Warfile: 'target/myweb-8.7.3.war'
-    Context: '/ecom-app-vasu'
-    ServerVersion: '7OrAbove'
